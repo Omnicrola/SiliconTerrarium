@@ -9,6 +9,6 @@ public class SiliconTerrariumBuilder {
 	}
 
 	public SiliconTerrarium build() {
-		return new SiliconTerrarium(new EntityManager(), CommandQueue.instance());
+		return new SiliconTerrarium(new TerrariumInitializer(), new EntityManager(), CommandQueue.instance());
 	}
 }

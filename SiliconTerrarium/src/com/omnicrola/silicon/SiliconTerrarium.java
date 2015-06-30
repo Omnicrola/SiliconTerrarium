@@ -8,21 +8,21 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 import com.omnicrola.silicon.command.CommandQueue;
-import com.omnicrola.silicon.command.CreateNewTerrariumCommand;
 import com.omnicrola.silicon.command.ICommand;
 import com.omnicrola.silicon.command.TerrariumExecutionContext;
-import com.omnicrola.silicon.entity.EntityFactory;
 import com.omnicrola.silicon.entity.EntityManager;
+import com.omnicrola.silicon.launch.TerrariumInitializer;
 import com.omnicrola.silicon.slick.SlickRenderWrapper;
-import com.omnicrola.silicon.util.RandomWrapper;
 
 public class SiliconTerrarium extends BasicGame {
 
 	private final EntityManager entityManager;
 	private final CommandQueue commandQueue;
+	private final TerrariumInitializer initializer;
 
-	public SiliconTerrarium(EntityManager entityManager, CommandQueue commandQueue) {
+	public SiliconTerrarium(TerrariumInitializer initializer, EntityManager entityManager, CommandQueue commandQueue) {
 		super("Silicon Terrarium");
+		this.initializer = initializer;
 		this.entityManager = entityManager;
 		this.commandQueue = commandQueue;
 
@@ -36,7 +36,7 @@ public class SiliconTerrarium extends BasicGame {
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		CommandQueue.instance().enqueueCommand(new CreateNewTerrariumCommand(new EntityFactory(new RandomWrapper())));
+		this.initializer.init(container);
 	}
 
 	@Override
