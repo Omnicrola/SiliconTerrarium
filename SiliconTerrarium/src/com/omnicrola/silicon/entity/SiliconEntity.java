@@ -10,19 +10,13 @@ public class SiliconEntity {
 	private Vector2f position;
 	private Vector2f velocity;
 	private final RenderShape baseShape;
-	private Vector2f orientation;
 	private float size;
 
 	public SiliconEntity(RenderShape renderShape) {
 		this.position = new Vector2f();
 		this.velocity = new Vector2f();
-		this.orientation = new Vector2f();
 		this.baseShape = renderShape;
 		this.size = 1.0f;
-	}
-
-	public void setOrientation(Vector2f orientation) {
-		this.orientation = orientation;
 	}
 
 	public void setPosition(Vector2f position) {
@@ -40,7 +34,7 @@ public class SiliconEntity {
 	//@formatter:off
 	public RenderShape getShape() {
 			final Transform translation = Transform.createTranslateTransform(this.position.x, this.position.y);
-			final Transform rotation = Transform.createRotateTransform((float) this.orientation.getTheta());
+			final Transform rotation = Transform.createRotateTransform((float) Math.toRadians(this.velocity.getTheta()));
 			final Transform scaling = Transform.createScaleTransform(this.size, this.size);
 
 			final Shape transformedShape = this.baseShape.getShape()

@@ -19,10 +19,11 @@ public class EntityFactory {
 
 	public SiliconEntity build() {
 		final Polygon renderShape = new Polygon();
-		renderShape.addPoint(5, 5);
-		renderShape.addPoint(-5, 5);
 		renderShape.addPoint(-5, -5);
-		renderShape.addPoint(5, -5);
+		renderShape.addPoint(0, -5);
+		renderShape.addPoint(10, 0);
+		renderShape.addPoint(0, 5);
+		renderShape.addPoint(-5, 5);
 		final SiliconEntity siliconEntity = new SiliconEntity(new RenderShape(renderShape, Color.white));
 		setRandomPosition(siliconEntity);
 		setRandomVelocity(siliconEntity);
@@ -30,7 +31,7 @@ public class EntityFactory {
 	}
 
 	private void setRandomVelocity(SiliconEntity siliconEntity) {
-		final Vector2f velocity = this.random.randomVector(5f, 5f);
+		final Vector2f velocity = this.random.randomVector(3f, 3f).sub(this.random.randomVector(3f, 3f));
 		siliconEntity.setVelocity(velocity);
 	}
 
