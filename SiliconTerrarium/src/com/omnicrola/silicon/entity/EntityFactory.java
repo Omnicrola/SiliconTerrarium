@@ -25,7 +25,13 @@ public class EntityFactory {
 		renderShape.addPoint(5, -5);
 		final SiliconEntity siliconEntity = new SiliconEntity(new RenderShape(renderShape, Color.white));
 		setRandomPosition(siliconEntity);
+		setRandomVelocity(siliconEntity);
 		return siliconEntity;
+	}
+
+	private void setRandomVelocity(SiliconEntity siliconEntity) {
+		final Vector2f velocity = this.random.randomVector(5f, 5f);
+		siliconEntity.setVelocity(velocity);
 	}
 
 	private void setRandomPosition(final SiliconEntity siliconEntity) {

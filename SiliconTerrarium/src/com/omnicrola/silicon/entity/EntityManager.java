@@ -28,4 +28,10 @@ public class EntityManager {
 		this.entities.clear();
 	}
 
+	public void update(float delta) {
+		for (final SiliconEntity siliconEntity : this.entities) {
+			siliconEntity.update(delta);
+		}
+	}
+
 }

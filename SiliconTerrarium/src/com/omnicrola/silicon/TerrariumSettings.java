@@ -5,6 +5,7 @@ public class TerrariumSettings {
 
 	private static final int SCREEN_X = 800;
 	private static final int SCREEN_Y = 600;
+	private static final int TARGET_FPS = 60;
 
 	private TerrariumSettings() {
 	}
@@ -15,5 +16,9 @@ public class TerrariumSettings {
 
 	public int getScreenY() {
 		return SCREEN_Y;
+	}
+
+	public int getTargetFps() {
+		return TARGET_FPS;
 	}
 }

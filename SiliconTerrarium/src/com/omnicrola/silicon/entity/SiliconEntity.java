@@ -51,4 +51,9 @@ public class SiliconEntity {
 	}
 	//@formatter:on
 
+	public void update(float delta) {
+		this.position.x += this.velocity.x * delta;
+		this.position.y += this.velocity.y * delta;
+	}
+
 }
