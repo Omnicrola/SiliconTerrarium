@@ -1,12 +1,14 @@
 package com.omnicrola.silicon.launch;
 
 import com.omnicrola.silicon.SiliconTerrarium;
+import com.omnicrola.silicon.command.CommandQueue;
+import com.omnicrola.silicon.entity.EntityManager;
 
 public class SiliconTerrariumBuilder {
 	public SiliconTerrariumBuilder() {
 	}
 
 	public SiliconTerrarium build() {
-		return new SiliconTerrarium();
+		return new SiliconTerrarium(new EntityManager(), CommandQueue.instance());
 	}
 }
