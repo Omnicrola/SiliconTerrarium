@@ -16,7 +16,7 @@ public class CreateNewTerrariumCommand implements ICommand {
 	public void execute(ICommandContext executionContext) {
 		executionContext.clearAllEntities();
 		for (int i = 0; i < NEW_CREATURE_COUNT; i++) {
-			final SiliconEntity newEntity = this.entityFactory.build();
+			final SiliconEntity newEntity = this.entityFactory.buildCritter();
 			executionContext.addEntity(newEntity);
 		}
 	}

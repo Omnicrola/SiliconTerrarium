@@ -7,18 +7,18 @@ import com.omnicrola.silicon.slick.IRenderWrapper;
 
 public class EntityManager {
 
-	private final ArrayList<SiliconEntity> entities;
+	private final ArrayList<ISiliconEntity> entities;
 
 	public EntityManager() {
 		this.entities = new ArrayList<>();
 	}
 
-	public void addEntity(SiliconEntity creature) {
+	public void addEntity(ISiliconEntity creature) {
 		this.entities.add(creature);
 	}
 
 	public void render(IRenderWrapper renderWrapper) {
-		for (final SiliconEntity entity : this.entities) {
+		for (final ISiliconEntity entity : this.entities) {
 			final RenderShape renderShape = entity.getShape();
 			renderWrapper.renderShape(renderShape);
 		}
@@ -29,7 +29,7 @@ public class EntityManager {
 	}
 
 	public void update(float delta) {
-		for (final SiliconEntity siliconEntity : this.entities) {
+		for (final ISiliconEntity siliconEntity : this.entities) {
 			siliconEntity.update(delta);
 		}
 	}

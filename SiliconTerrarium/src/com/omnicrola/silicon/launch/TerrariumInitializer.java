@@ -7,6 +7,7 @@ import com.omnicrola.silicon.TerrariumSettings;
 import com.omnicrola.silicon.command.CommandQueue;
 import com.omnicrola.silicon.command.CreateNewTerrariumCommand;
 import com.omnicrola.silicon.entity.EntityFactory;
+import com.omnicrola.silicon.entity.behavior.BehaviorFactor;
 import com.omnicrola.silicon.input.KeyInputHandler;
 import com.omnicrola.silicon.input.ReloadWorldListener;
 import com.omnicrola.silicon.util.RandomWrapper;
@@ -33,7 +34,7 @@ public class TerrariumInitializer {
 
 	private void loadInitialEntities() {
 		final CreateNewTerrariumCommand newTerrariumCommand = new CreateNewTerrariumCommand(
-				new EntityFactory(this.terrariumSettings, new RandomWrapper()));
+				new EntityFactory(new BehaviorFactor(), this.terrariumSettings, new RandomWrapper()));
 		CommandQueue.instance().enqueueCommand(newTerrariumCommand);
 	}
 

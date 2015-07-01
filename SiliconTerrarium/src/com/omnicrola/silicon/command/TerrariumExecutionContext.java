@@ -1,7 +1,7 @@
 package com.omnicrola.silicon.command;
 
 import com.omnicrola.silicon.entity.EntityManager;
-import com.omnicrola.silicon.entity.SiliconEntity;
+import com.omnicrola.silicon.entity.ISiliconEntity;
 
 public class TerrariumExecutionContext implements ICommandContext {
 
@@ -17,7 +17,7 @@ public class TerrariumExecutionContext implements ICommandContext {
 	}
 
 	@Override
-	public void addEntity(SiliconEntity newEntity) {
+	public void addEntity(ISiliconEntity newEntity) {
 		this.entityManager.addEntity(newEntity);
 	}
 
