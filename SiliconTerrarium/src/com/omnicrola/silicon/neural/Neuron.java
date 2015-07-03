@@ -1,18 +1,17 @@
 package com.omnicrola.silicon.neural;
 
-public class Neuron {
-	final int inputCount;
-	final float[] weights;
+import java.util.LinkedHashMap;
 
-	public Neuron(int inputCount) {
-		this.inputCount = inputCount + 1; // add 1 extra for bias
-		this.weights = new float[inputCount];
-		randomizeWeights();
+public class Neuron implements INeuralInput {
+	private final LinkedHashMap<INeuralInput, Float> inputs;
+
+	public Neuron(LinkedHashMap<INeuralInput, Float> inputs) {
+		this.inputs = inputs;
 	}
 
-	private void randomizeWeights() {
-		for (int i = 0; i < this.weights.length; i++) {
-			this.weights[i] = (float) Math.random();
-		}
+	@Override
+	public float getOutputSignal() {
+		return 1.0f;
 	}
+
 }
