@@ -21,16 +21,23 @@ public class EntityFactory {
 	}
 
 	public SiliconEntity buildCritter() {
+		final RenderShape renderShape = createDefaultShape();
+		final SiliconEntity siliconEntity = new SiliconEntity(renderShape);
+		siliconEntity.addBehavior(this.behaviorFactory.buildNeuralNetwork(siliconEntity));
+		setRandomPosition(siliconEntity);
+		setRandomVelocity(siliconEntity);
+		return siliconEntity;
+	}
+
+	private RenderShape createDefaultShape() {
 		final Polygon renderShape = new Polygon();
 		renderShape.addPoint(-5, -5);
 		renderShape.addPoint(0, -5);
 		renderShape.addPoint(10, 0);
 		renderShape.addPoint(0, 5);
 		renderShape.addPoint(-5, 5);
-		final SiliconEntity siliconEntity = new SiliconEntity(new RenderShape(renderShape, Color.white));
-		setRandomPosition(siliconEntity);
-		setRandomVelocity(siliconEntity);
-		return siliconEntity;
+		final RenderShape renderShape2 = new RenderShape(renderShape, Color.white);
+		return renderShape2;
 	}
 
 	private void setRandomVelocity(SiliconEntity siliconEntity) {

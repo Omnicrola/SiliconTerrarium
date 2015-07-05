@@ -1,18 +1,15 @@
 package com.omnicrola.silicon.input;
 
-import com.omnicrola.silicon.TerrariumSettings;
 import com.omnicrola.silicon.command.CommandQueue;
 import com.omnicrola.silicon.command.CreateNewTerrariumCommand;
 import com.omnicrola.silicon.entity.EntityFactory;
-import com.omnicrola.silicon.entity.behavior.BehaviorFactor;
-import com.omnicrola.silicon.util.RandomWrapper;
 
 public class ReloadWorldListener implements IKeyListener {
 
-	private final TerrariumSettings settings;
+	private final EntityFactory entityFactory;
 
-	public ReloadWorldListener(TerrariumSettings settings) {
-		this.settings = settings;
+	public ReloadWorldListener(EntityFactory entityFactory) {
+		this.entityFactory = entityFactory;
 	}
 
 	@Override
@@ -21,8 +18,7 @@ public class ReloadWorldListener implements IKeyListener {
 
 	@Override
 	public void keyUp() {
-		final CreateNewTerrariumCommand command = new CreateNewTerrariumCommand(
-				new EntityFactory(new BehaviorFactor(), this.settings, new RandomWrapper()));
+		final CreateNewTerrariumCommand command = new CreateNewTerrariumCommand(this.entityFactory);
 		CommandQueue.instance().enqueueCommand(command);
 	}
 

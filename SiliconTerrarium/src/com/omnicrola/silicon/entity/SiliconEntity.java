@@ -34,6 +34,10 @@ public class SiliconEntity implements ISiliconEntity {
 		this.size = size;
 	}
 
+	public IMotionGovernor getMotionGovernor() {
+		return this.motionGovernor;
+	}
+
 	public void setVelocity(Vector2f velocity) {
 		this.motionGovernor.setVelocity(velocity);
 	}

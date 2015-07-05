@@ -2,7 +2,7 @@ package com.omnicrola.silicon.entity;
 
 import org.newdawn.slick.geom.Vector2f;
 
-public class MotionGovernor {
+public class MotionGovernor implements IMotionGovernor {
 	private final Vector2f position;
 	private final Vector2f velocity;
 
