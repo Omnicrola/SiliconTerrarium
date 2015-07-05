@@ -2,7 +2,7 @@ package com.omnicrola.silicon.slick;
 
 import org.newdawn.slick.Graphics;
 
-import com.omnicrola.silicon.creature.shape.RenderShape;
+import com.omnicrola.silicon.creature.shape.EntityShape;
 
 public class SlickRenderWrapper implements IRenderWrapper {
 
@@ -13,7 +13,7 @@ public class SlickRenderWrapper implements IRenderWrapper {
 	}
 
 	@Override
-	public void renderShape(RenderShape renderShape) {
+	public void renderShape(EntityShape renderShape) {
 		this.graphics.setColor(renderShape.getColor());
 		this.graphics.draw(renderShape.getShape());
 	}

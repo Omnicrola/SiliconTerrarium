@@ -2,7 +2,7 @@ package com.omnicrola.silicon.entity;
 
 import java.util.ArrayList;
 
-import com.omnicrola.silicon.creature.shape.RenderShape;
+import com.omnicrola.silicon.creature.shape.EntityShape;
 import com.omnicrola.silicon.slick.IRenderWrapper;
 
 public class EntityManager {
@@ -19,7 +19,7 @@ public class EntityManager {
 
 	public void render(IRenderWrapper renderWrapper) {
 		for (final ISiliconEntity entity : this.entities) {
-			final RenderShape renderShape = entity.getShape();
+			final EntityShape renderShape = entity.getShape();
 			renderWrapper.renderShape(renderShape);
 		}
 	}

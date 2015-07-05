@@ -6,20 +6,26 @@ import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Transform;
 import org.newdawn.slick.geom.Vector2f;
 
-import com.omnicrola.silicon.creature.shape.RenderShape;
+import com.omnicrola.silicon.creature.shape.EntityShape;
 import com.omnicrola.silicon.entity.behavior.IBehavior;
 
 public class SiliconEntity implements ISiliconEntity {
-	private final RenderShape baseShape;
+	private final EntityShape baseShape;
 	private float size;
 	private final ArrayList<IBehavior> behaviors;
 	private final MotionGovernor motionGovernor;
+	private final EntityType entityType;
 
-	public SiliconEntity(RenderShape renderShape) {
+	public SiliconEntity(EntityShape entityShape, EntityType entityType) {
+		this.entityType = entityType;
 		this.behaviors = new ArrayList<>();
-		this.baseShape = renderShape;
+		this.baseShape = entityShape;
 		this.motionGovernor = new MotionGovernor();
 		this.size = 1.0f;
+	}
+
+	public EntityType getEntityType() {
+		return this.entityType;
 	}
 
 	public void addBehavior(IBehavior behavior) {
@@ -44,7 +50,7 @@ public class SiliconEntity implements ISiliconEntity {
 
 	//@formatter:off
 	@Override
-	public RenderShape getShape() {
+	public EntityShape getShape() {
 		final Vector2f p = this.motionGovernor.getPosition();
 		final Vector2f v = this.motionGovernor.getVelocity();
 		final Transform translation = Transform.createTranslateTransform(p.x, p.y);
@@ -55,7 +61,7 @@ public class SiliconEntity implements ISiliconEntity {
 				.transform(scaling)
 				.transform(rotation)
 				.transform(translation);
-		return new RenderShape(transformedShape, this.baseShape.getColor());
+		return new EntityShape(transformedShape, this.baseShape.getColor());
 	}
 	//@formatter:on
 

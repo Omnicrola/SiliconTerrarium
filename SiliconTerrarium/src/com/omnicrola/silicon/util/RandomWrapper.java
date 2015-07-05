@@ -11,6 +11,10 @@ public class RandomWrapper {
 		this.random = new Random();
 	}
 
+	public Vector2f randomVector(float max) {
+		return randomVector(max, max);
+	}
+
 	public Vector2f randomVector(float maxX, float maxY) {
 		final float x = this.random.nextFloat() * maxX;
 		final float y = this.random.nextFloat() * maxY;

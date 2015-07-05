@@ -3,6 +3,7 @@ package com.omnicrola.silicon.launch;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 
+import com.omnicrola.silicon.TerrariumSettings;
 import com.omnicrola.silicon.command.CommandQueue;
 import com.omnicrola.silicon.command.CreateNewTerrariumCommand;
 import com.omnicrola.silicon.entity.EntityFactory;
@@ -11,9 +12,11 @@ import com.omnicrola.silicon.input.ReloadWorldListener;
 
 public class TerrariumInitializer {
 	private final EntityFactory entityFactory;
+	private final TerrariumSettings settings;
 
-	public TerrariumInitializer(EntityFactory entityFactory) {
+	public TerrariumInitializer(EntityFactory entityFactory, TerrariumSettings settings) {
 		this.entityFactory = entityFactory;
+		this.settings = settings;
 	}
 
 	public void init(GameContainer container) {
@@ -25,12 +28,13 @@ public class TerrariumInitializer {
 		final KeyInputHandler keyHandler = new KeyInputHandler();
 		input.addKeyListener(keyHandler);
 
-		final ReloadWorldListener reloadWorldListener = new ReloadWorldListener(this.entityFactory);
+		final ReloadWorldListener reloadWorldListener = new ReloadWorldListener(this.entityFactory, this.settings);
 		keyHandler.addListener(Input.KEY_R, reloadWorldListener);
 	}
 
 	private void loadInitialEntities(EntityFactory entityFactory) {
-		final CreateNewTerrariumCommand newTerrariumCommand = new CreateNewTerrariumCommand(entityFactory);
+		final CreateNewTerrariumCommand newTerrariumCommand = new CreateNewTerrariumCommand(entityFactory,
+				this.settings);
 		CommandQueue.instance().enqueueCommand(newTerrariumCommand);
 	}
 }
