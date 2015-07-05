@@ -59,7 +59,7 @@ public class NeuralNetworkTest {
 		neuronLayer1.add(randNeuron(inputs));
 		neuronLayer1.add(randNeuron(inputs));
 
-		final ArrayList<Neuron> neuronLayer2 = new ArrayList<>();
+		final ArrayList<INeuralInput> neuronLayer2 = new ArrayList<>();
 		neuronLayer2.add(randNeuron(neuronLayer1, new NeuralAction("one", R.nextFloat())));
 		neuronLayer2.add(randNeuron(neuronLayer1, new NeuralAction("two", R.nextFloat())));
 		neuronLayer2.add(randNeuron(neuronLayer1, new NeuralAction("three", R.nextFloat())));

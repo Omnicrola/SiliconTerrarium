@@ -4,21 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NeuralNetwork {
-	private final List<Neuron> neurons;
+	private final List<INeuralInput> neurons;
 
-	public NeuralNetwork(List<Neuron> neurons) {
+	public NeuralNetwork(List<INeuralInput> neurons) {
 		this.neurons = neurons;
 	}
 
 	public void evaluate() {
-		for (final Neuron neuron : this.neurons) {
+		for (final INeuralInput neuron : this.neurons) {
 			neuron.evaluate();
 		}
 	}
 
 	public NeuralNetwork mutate(MutationDirective mutationDirective) {
-		final List<Neuron> mutatedNeurons = new ArrayList<>();
-		for (final Neuron neuron : this.neurons) {
+		final List<INeuralInput> mutatedNeurons = new ArrayList<>();
+		for (final INeuralInput neuron : this.neurons) {
 			mutatedNeurons.add(neuron.mutate(mutationDirective));
 		}
 		return new NeuralNetwork(mutatedNeurons);
