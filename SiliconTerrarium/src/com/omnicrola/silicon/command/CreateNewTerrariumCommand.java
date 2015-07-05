@@ -4,7 +4,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.silicon.TerrariumSettings;
 import com.omnicrola.silicon.entity.EntityFactory;
-import com.omnicrola.silicon.entity.SiliconEntity;
+import com.omnicrola.silicon.entity.ISiliconEntity;
 import com.omnicrola.silicon.util.RandomWrapper;
 
 public class CreateNewTerrariumCommand implements ICommand {
@@ -33,7 +33,7 @@ public class CreateNewTerrariumCommand implements ICommand {
 		for (int i = 0; i < FOOD_COUNT; i++) {
 			final Vector2f position = randomPosition();
 			final Vector2f velocity = randomVelocity();
-			final SiliconEntity newEntity = this.entityFactory.buildFood(position, velocity);
+			final ISiliconEntity newEntity = this.entityFactory.buildFood(position, velocity);
 			executionContext.addEntity(newEntity);
 		}
 	}
@@ -42,7 +42,7 @@ public class CreateNewTerrariumCommand implements ICommand {
 		for (int i = 0; i < NEW_CREATURE_COUNT; i++) {
 			final Vector2f position = randomPosition();
 			final Vector2f velocity = randomVelocity();
-			final SiliconEntity newEntity = this.entityFactory.buildCritter(position, velocity);
+			final ISiliconEntity newEntity = this.entityFactory.buildCritter(position, velocity);
 			executionContext.addEntity(newEntity);
 		}
 	}

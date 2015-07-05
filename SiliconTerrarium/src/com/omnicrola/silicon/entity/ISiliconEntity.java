@@ -24,4 +24,8 @@ public interface ISiliconEntity {
 
 	float getEnergy();
 
+	void adjustFitness(float amount);
+
+	public abstract float getFitness();
+
 }

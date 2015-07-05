@@ -19,6 +19,7 @@ public class SiliconEntity implements ISiliconEntity {
 	private final EntityType entityType;
 	private boolean isAlive = true;
 	private float energy;
+	private float fitness;
 
 	public SiliconEntity(EntityShape entityShape, EntityType entityType, float startingEnergy) {
 		this.entityType = entityType;
@@ -27,6 +28,7 @@ public class SiliconEntity implements ISiliconEntity {
 		this.baseShape = entityShape;
 		this.motionGovernor = new MotionGovernor();
 		this.size = 1.0f;
+		this.fitness = 0.0f;
 		this.energy = startingEnergy;
 	}
 
@@ -119,5 +121,15 @@ public class SiliconEntity implements ISiliconEntity {
 	@Override
 	public float getEnergy() {
 		return this.energy;
+	}
+
+	@Override
+	public void adjustFitness(float amount) {
+		this.fitness += amount;
+	}
+
+	@Override
+	public float getFitness() {
+		return this.fitness;
 	}
 }
