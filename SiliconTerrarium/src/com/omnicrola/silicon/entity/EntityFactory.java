@@ -14,7 +14,7 @@ public class EntityFactory {
 
 	public SiliconEntity buildFood(Vector2f position, Vector2f velocity) {
 		final EntityShape shape = EntityShape.createFoodShape();
-		final SiliconEntity siliconEntity = new SiliconEntity(shape, EntityType.FOOD);
+		final SiliconEntity siliconEntity = new SiliconEntity(shape, EntityType.FOOD, 1f);
 		siliconEntity.setPosition(position);
 		siliconEntity.setVelocity(velocity);
 		return siliconEntity;
@@ -22,8 +22,9 @@ public class EntityFactory {
 
 	public SiliconEntity buildCritter(Vector2f position, Vector2f velocity) {
 		final EntityShape renderShape = EntityShape.defaultCritterShape();
-		final SiliconEntity siliconEntity = new SiliconEntity(renderShape, EntityType.CREATURE);
+		final SiliconEntity siliconEntity = new SiliconEntity(renderShape, EntityType.CREATURE, 10f);
 		siliconEntity.addUpdateBehavior(this.behaviorFactory.buildNeuralNetwork(siliconEntity));
+		siliconEntity.addCollisionBehavior(this.behaviorFactory.buildEatBehavior());
 		siliconEntity.setPosition(position);
 		siliconEntity.setVelocity(velocity);
 		return siliconEntity;

@@ -16,4 +16,8 @@ public class BehaviorFactor {
 		return neuralNetworkBehavior;
 	}
 
+	public ICollisionBehavior buildEatBehavior() {
+		return new EatOtherEntityBehavior();
+	}
+
 }

@@ -18,14 +18,16 @@ public class SiliconEntity implements ISiliconEntity {
 	private final MotionGovernor motionGovernor;
 	private final EntityType entityType;
 	private boolean isAlive = true;
+	private float energy;
 
-	public SiliconEntity(EntityShape entityShape, EntityType entityType) {
+	public SiliconEntity(EntityShape entityShape, EntityType entityType, float startingEnergy) {
 		this.entityType = entityType;
 		this.behaviorsUpdate = new ArrayList<>();
 		this.behaviorsCollision = new ArrayList<>();
 		this.baseShape = entityShape;
 		this.motionGovernor = new MotionGovernor();
 		this.size = 1.0f;
+		this.energy = startingEnergy;
 	}
 
 	@Override
@@ -102,11 +104,15 @@ public class SiliconEntity implements ISiliconEntity {
 
 	@Override
 	public boolean isAlive() {
-		return this.isAlive;
+		return this.isAlive && this.energy > 0f;
 	}
 
 	public void destroy() {
 		this.isAlive = false;
 	}
 
+	@Override
+	public void adjustEnergy(float adjustementAmount) {
+		this.energy += adjustementAmount;
+	}
 }

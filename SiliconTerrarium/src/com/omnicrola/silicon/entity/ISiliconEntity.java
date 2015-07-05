@@ -20,4 +20,6 @@ public interface ISiliconEntity {
 
 	void collide(ISiliconEntity otherEntity);
 
+	void adjustEnergy(float amount);
+
 }
