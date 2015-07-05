@@ -85,4 +85,8 @@ public class EntityManager implements IRenderable {
 		return this.collisionManager.getEntityAt(x, y);
 	}
 
+	public Optional<ISiliconEntity> getNearestEntityOfType(EntityType type, ISiliconEntity searchEntity) {
+		return this.collisionManager.getNearestEntityOfType(type, searchEntity);
+	}
+
 }

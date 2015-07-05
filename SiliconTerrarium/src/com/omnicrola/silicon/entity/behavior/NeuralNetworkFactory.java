@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import com.omnicrola.silicon.core.IRenderable;
-import com.omnicrola.silicon.entity.SiliconEntity;
+import com.omnicrola.silicon.entity.EntityManager;
+import com.omnicrola.silicon.entity.ISiliconEntity;
+import com.omnicrola.silicon.entity.behavior.neural.EnergyLevelInput;
 import com.omnicrola.silicon.entity.behavior.neural.FoodProximityInput;
+import com.omnicrola.silicon.entity.behavior.neural.NearestCreatureDistanceInput;
 import com.omnicrola.silicon.neural.INeuralInput;
 import com.omnicrola.silicon.neural.NeuralInputWeight;
 import com.omnicrola.silicon.neural.NeuralNetwork;
@@ -16,23 +18,29 @@ import com.omnicrola.silicon.neural.Neuron;
 
 public class NeuralNetworkFactory {
 	private static final Random R = new Random();
-	private final IRenderable entityManager;
+	private final EntityManager entityManager;
 
-	public NeuralNetworkFactory(IRenderable entityManager) {
+	public NeuralNetworkFactory(EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
 
-	public NeuralNetwork build(SiliconEntity siliconEntity) {
+	public NeuralNetwork build(ISiliconEntity siliconEntity) {
 		final List<INeuralInput> inputs = createInputs(siliconEntity);
 		final List<INeuralInput> neuronLayer1 = createNeuronLayer(inputs);
 		final List<INeuralInput> neuronLayer2 = createNeuronLayer(neuronLayer1);
 		return new NeuralNetwork(neuronLayer2);
 	}
 
-	private List<INeuralInput> createInputs(SiliconEntity siliconEntity) {
+	private List<INeuralInput> createInputs(ISiliconEntity siliconEntity) {
 		final FoodProximityInput foodProximityInput = new FoodProximityInput(siliconEntity, this.entityManager);
+		final EnergyLevelInput energyLevelInput = new EnergyLevelInput(siliconEntity);
+		final NearestCreatureDistanceInput nearestCreatureDistanceInput = new NearestCreatureDistanceInput(
+				siliconEntity, this.entityManager);
+
 		final ArrayList<INeuralInput> inputs = new ArrayList<>();
 		inputs.add(foodProximityInput);
+		inputs.add(energyLevelInput);
+		inputs.add(nearestCreatureDistanceInput);
 		return inputs;
 	}
 

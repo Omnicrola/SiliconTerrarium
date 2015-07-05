@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.newdawn.slick.geom.Shape;
+import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.silicon.core.IUpdatable;
 import com.omnicrola.silicon.entity.EntityType;
@@ -71,6 +72,27 @@ public class CollisionManager implements IUpdatable {
 			}
 		}
 		return Optional.empty();
+	}
+
+	public Optional<ISiliconEntity> getNearestEntityOfType(EntityType type, ISiliconEntity sourceEntity) {
+		final List<ISiliconEntity> group = this.collisionGroups.get(type);
+		final Vector2f searchPosition = sourceEntity.getPosition();
+		ISiliconEntity entityFound = null;
+		float minDistance = Float.MAX_VALUE;
+		for (final ISiliconEntity otherEntity : group) {
+			if (otherEntity != sourceEntity) {
+				final float distance = searchPosition.distance(otherEntity.getPosition());
+				if (distance < minDistance) {
+					entityFound = otherEntity;
+					minDistance = distance;
+				}
+			}
+		}
+		if (entityFound == null) {
+			return Optional.empty();
+		} else {
+			return Optional.of(entityFound);
+		}
 	}
 
 }

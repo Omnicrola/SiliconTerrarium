@@ -10,24 +10,23 @@ import com.omnicrola.silicon.entity.ISiliconEntity;
 import com.omnicrola.silicon.neural.INeuralInput;
 import com.omnicrola.silicon.neural.MutationDirective;
 
-public class FoodProximityInput implements INeuralInput {
+public class NearestCreatureDistanceInput implements INeuralInput {
 
-	private final EntityManager entityManager;
 	private final ISiliconEntity siliconEntity;
+	private final EntityManager entityManager;
 
-	public FoodProximityInput(ISiliconEntity siliconEntity, EntityManager entityManager) {
+	public NearestCreatureDistanceInput(ISiliconEntity siliconEntity, EntityManager entityManager) {
 		this.siliconEntity = siliconEntity;
 		this.entityManager = entityManager;
 	}
 
 	@Override
 	public float evaluate() {
-		final Vector2f ourPosition = this.siliconEntity.getPosition();
-		final Optional<ISiliconEntity> food = this.entityManager.getNearestEntityOfType(EntityType.FOOD,
+		final Optional<ISiliconEntity> nearestCreature = this.entityManager.getNearestEntityOfType(EntityType.CREATURE,
 				this.siliconEntity);
-		if (food.isPresent()) {
-			final float distance = ourPosition.distance(food.get().getPosition());
-			return distance;
+		if (nearestCreature.isPresent()) {
+			final Vector2f otherPosition = nearestCreature.get().getPosition();
+			return this.siliconEntity.getPosition().distance(otherPosition);
 		}
 		return 0;
 	}
