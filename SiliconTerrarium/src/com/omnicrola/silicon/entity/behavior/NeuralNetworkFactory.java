@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import com.omnicrola.silicon.entity.EntityManager;
+import com.omnicrola.silicon.core.IRenderable;
 import com.omnicrola.silicon.entity.SiliconEntity;
 import com.omnicrola.silicon.entity.behavior.neural.FoodProximityInput;
 import com.omnicrola.silicon.neural.INeuralInput;
@@ -16,9 +16,9 @@ import com.omnicrola.silicon.neural.Neuron;
 
 public class NeuralNetworkFactory {
 	private static final Random R = new Random();
-	private final EntityManager entityManager;
+	private final IRenderable entityManager;
 
-	public NeuralNetworkFactory(EntityManager entityManager) {
+	public NeuralNetworkFactory(IRenderable entityManager) {
 		this.entityManager = entityManager;
 	}
 

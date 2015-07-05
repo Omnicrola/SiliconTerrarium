@@ -10,7 +10,7 @@ public class BehaviorFactor {
 		this.neuralNetworkFactory = neuralNetworkFactory;
 	}
 
-	public IBehavior buildNeuralNetwork(SiliconEntity siliconEntity) {
+	public IUpdateBehavior buildNeuralNetwork(SiliconEntity siliconEntity) {
 		final NeuralNetwork neuralNetwork = this.neuralNetworkFactory.build(siliconEntity);
 		final NeuralNetworkBehavior neuralNetworkBehavior = new NeuralNetworkBehavior(neuralNetwork);
 		return neuralNetworkBehavior;

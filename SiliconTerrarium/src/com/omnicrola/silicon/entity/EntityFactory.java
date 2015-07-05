@@ -23,7 +23,7 @@ public class EntityFactory {
 	public SiliconEntity buildCritter(Vector2f position, Vector2f velocity) {
 		final EntityShape renderShape = EntityShape.defaultCritterShape();
 		final SiliconEntity siliconEntity = new SiliconEntity(renderShape, EntityType.CREATURE);
-		siliconEntity.addBehavior(this.behaviorFactory.buildNeuralNetwork(siliconEntity));
+		siliconEntity.addUpdateBehavior(this.behaviorFactory.buildNeuralNetwork(siliconEntity));
 		siliconEntity.setPosition(position);
 		siliconEntity.setVelocity(velocity);
 		return siliconEntity;

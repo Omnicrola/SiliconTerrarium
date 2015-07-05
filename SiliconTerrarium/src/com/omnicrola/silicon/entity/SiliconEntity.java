@@ -7,30 +7,45 @@ import org.newdawn.slick.geom.Transform;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.silicon.creature.shape.EntityShape;
-import com.omnicrola.silicon.entity.behavior.IBehavior;
+import com.omnicrola.silicon.entity.behavior.ICollisionBehavior;
+import com.omnicrola.silicon.entity.behavior.IUpdateBehavior;
 
 public class SiliconEntity implements ISiliconEntity {
 	private final EntityShape baseShape;
 	private float size;
-	private final ArrayList<IBehavior> behaviors;
+	private final ArrayList<IUpdateBehavior> behaviorsUpdate;
+	private final ArrayList<ICollisionBehavior> behaviorsCollision;
 	private final MotionGovernor motionGovernor;
 	private final EntityType entityType;
 	private boolean isAlive = true;
 
 	public SiliconEntity(EntityShape entityShape, EntityType entityType) {
 		this.entityType = entityType;
-		this.behaviors = new ArrayList<>();
+		this.behaviorsUpdate = new ArrayList<>();
+		this.behaviorsCollision = new ArrayList<>();
 		this.baseShape = entityShape;
 		this.motionGovernor = new MotionGovernor();
 		this.size = 1.0f;
 	}
 
-	public EntityType getEntityType() {
+	@Override
+	public EntityType getType() {
 		return this.entityType;
 	}
 
-	public void addBehavior(IBehavior behavior) {
-		this.behaviors.add(behavior);
+	public void addUpdateBehavior(IUpdateBehavior behavior) {
+		this.behaviorsUpdate.add(behavior);
+	}
+
+	public void addCollisionBehavior(ICollisionBehavior behavior) {
+		this.behaviorsCollision.add(behavior);
+	}
+
+	@Override
+	public void collide(ISiliconEntity otherEntity) {
+		for (final ICollisionBehavior collisionBehavior : this.behaviorsCollision) {
+			collisionBehavior.collide(this, otherEntity);
+		}
 	}
 
 	@Override
@@ -79,7 +94,7 @@ public class SiliconEntity implements ISiliconEntity {
 	}
 
 	private void updateBehaviors(float delta) {
-		for (final IBehavior behavior : this.behaviors) {
+		for (final IUpdateBehavior behavior : this.behaviorsUpdate) {
 			behavior.execute(this, delta);
 		}
 

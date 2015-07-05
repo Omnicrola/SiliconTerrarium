@@ -1,8 +1,9 @@
 package com.omnicrola.silicon.launch;
 
-import com.omnicrola.silicon.SiliconTerrarium;
 import com.omnicrola.silicon.TerrariumSettings;
 import com.omnicrola.silicon.command.CommandQueue;
+import com.omnicrola.silicon.core.IRenderable;
+import com.omnicrola.silicon.core.SiliconTerrarium;
 import com.omnicrola.silicon.entity.EntityFactory;
 import com.omnicrola.silicon.entity.EntityManager;
 import com.omnicrola.silicon.entity.behavior.BehaviorFactor;
@@ -25,7 +26,7 @@ public class SiliconTerrariumBuilder {
 				settings.getTargetFps()));
 	}
 
-	private EntityFactory createEntityFactory(TerrariumSettings settings, EntityManager entityManager) {
+	private EntityFactory createEntityFactory(TerrariumSettings settings, IRenderable entityManager) {
 		final NeuralNetworkFactory neuralNetworkFactory = new NeuralNetworkFactory(entityManager);
 		final BehaviorFactor behaviorFactory = new BehaviorFactor(neuralNetworkFactory);
 

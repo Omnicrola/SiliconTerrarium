@@ -16,4 +16,8 @@ public interface ISiliconEntity {
 
 	void setPosition(Vector2f position);
 
+	EntityType getType();
+
+	void collide(ISiliconEntity otherEntity);
+
 }

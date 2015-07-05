@@ -3,7 +3,7 @@ package com.omnicrola.silicon.entity.behavior;
 import com.omnicrola.silicon.entity.ISiliconEntity;
 import com.omnicrola.silicon.neural.NeuralNetwork;
 
-public class NeuralNetworkBehavior implements IBehavior {
+public class NeuralNetworkBehavior implements IUpdateBehavior {
 	private final NeuralNetwork neuralNetwork;
 
 	public NeuralNetworkBehavior(NeuralNetwork neuralNetwork) {

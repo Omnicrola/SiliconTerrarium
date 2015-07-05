@@ -3,8 +3,8 @@ package com.omnicrola.silicon.launch;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
-import com.omnicrola.silicon.SiliconTerrarium;
 import com.omnicrola.silicon.TerrariumSettings;
+import com.omnicrola.silicon.core.SiliconTerrarium;
 
 public class SiliconTerrariumLauncher {
 	private final SiliconTerrariumBuilder siliconTerrariumBuilder;

@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.silicon.TerrariumSettings;
+import com.omnicrola.silicon.core.IRenderable;
 import com.omnicrola.silicon.creature.shape.EntityShape;
 import com.omnicrola.silicon.entity.physics.CollisionManager;
 import com.omnicrola.silicon.slick.IRenderWrapper;
 
-public class EntityManager {
+public class EntityManager implements IRenderable {
 
 	private final ArrayList<ISiliconEntity> entities;
 	private final CollisionManager collisionManager;
@@ -26,6 +27,7 @@ public class EntityManager {
 		this.collisionManager.addEntity(entity);
 	}
 
+	@Override
 	public void render(IRenderWrapper renderWrapper) {
 		for (final ISiliconEntity entity : this.entities) {
 			final EntityShape renderShape = entity.getShape();
@@ -37,6 +39,7 @@ public class EntityManager {
 		this.entities.clear();
 	}
 
+	@Override
 	public void update(float delta) {
 		updateEntities(delta);
 		wrapEdges();
