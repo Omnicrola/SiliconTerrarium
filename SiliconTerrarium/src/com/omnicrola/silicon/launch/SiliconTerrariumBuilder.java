@@ -17,7 +17,7 @@ public class SiliconTerrariumBuilder {
 	public SiliconTerrarium build() {
 		final TerrariumSettings settings = TerrariumSettings.INSTANCE;
 
-		final EntityManager entityManager = new EntityManager(new CollisionManager());
+		final EntityManager entityManager = new EntityManager(settings, new CollisionManager());
 		final TerrariumInitializer initializer = new TerrariumInitializer(createEntityFactory(settings, entityManager),
 				settings);
 		final CommandQueue commandQueue = CommandQueue.instance();

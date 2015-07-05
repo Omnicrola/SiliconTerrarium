@@ -33,8 +33,14 @@ public class SiliconEntity implements ISiliconEntity {
 		this.behaviors.add(behavior);
 	}
 
+	@Override
 	public void setPosition(Vector2f position) {
 		this.motionGovernor.setPosition(position);
+	}
+
+	@Override
+	public Vector2f getPosition() {
+		return this.motionGovernor.getPosition();
 	}
 
 	public void setSize(float size) {
