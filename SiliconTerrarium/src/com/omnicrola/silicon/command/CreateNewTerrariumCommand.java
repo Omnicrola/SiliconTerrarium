@@ -33,7 +33,6 @@ public class CreateNewTerrariumCommand implements ICommand {
 		for (int i = 0; i < FOOD_COUNT; i++) {
 			final Vector2f position = randomPosition();
 			final Vector2f velocity = randomVelocity();
-			System.out.println(position);
 			final SiliconEntity newEntity = this.entityFactory.buildFood(position, velocity);
 			executionContext.addEntity(newEntity);
 		}

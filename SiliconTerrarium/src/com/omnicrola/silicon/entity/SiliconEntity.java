@@ -15,6 +15,7 @@ public class SiliconEntity implements ISiliconEntity {
 	private final ArrayList<IBehavior> behaviors;
 	private final MotionGovernor motionGovernor;
 	private final EntityType entityType;
+	private boolean isAlive = true;
 
 	public SiliconEntity(EntityShape entityShape, EntityType entityType) {
 		this.entityType = entityType;
@@ -76,6 +77,15 @@ public class SiliconEntity implements ISiliconEntity {
 			behavior.execute(this, delta);
 		}
 
+	}
+
+	@Override
+	public boolean isAlive() {
+		return this.isAlive;
+	}
+
+	public void destroy() {
+		this.isAlive = false;
 	}
 
 }

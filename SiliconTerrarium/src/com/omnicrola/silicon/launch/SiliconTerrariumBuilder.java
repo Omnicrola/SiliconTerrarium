@@ -7,6 +7,7 @@ import com.omnicrola.silicon.entity.EntityFactory;
 import com.omnicrola.silicon.entity.EntityManager;
 import com.omnicrola.silicon.entity.behavior.BehaviorFactor;
 import com.omnicrola.silicon.entity.behavior.NeuralNetworkFactory;
+import com.omnicrola.silicon.entity.physics.CollisionManager;
 import com.omnicrola.silicon.util.DeltaCalculator;
 
 public class SiliconTerrariumBuilder {
@@ -16,7 +17,7 @@ public class SiliconTerrariumBuilder {
 	public SiliconTerrarium build() {
 		final TerrariumSettings settings = TerrariumSettings.INSTANCE;
 
-		final EntityManager entityManager = new EntityManager();
+		final EntityManager entityManager = new EntityManager(new CollisionManager());
 		final TerrariumInitializer initializer = new TerrariumInitializer(createEntityFactory(settings, entityManager),
 				settings);
 		final CommandQueue commandQueue = CommandQueue.instance();

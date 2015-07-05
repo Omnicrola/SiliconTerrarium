@@ -8,4 +8,6 @@ public interface ISiliconEntity {
 
 	EntityShape getShape();
 
+	boolean isAlive();
+
 }
