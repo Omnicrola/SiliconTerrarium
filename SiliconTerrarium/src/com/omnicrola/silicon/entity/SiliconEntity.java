@@ -115,4 +115,9 @@ public class SiliconEntity implements ISiliconEntity {
 	public void adjustEnergy(float adjustementAmount) {
 		this.energy += adjustementAmount;
 	}
+
+	@Override
+	public float getEnergy() {
+		return this.energy;
+	}
 }

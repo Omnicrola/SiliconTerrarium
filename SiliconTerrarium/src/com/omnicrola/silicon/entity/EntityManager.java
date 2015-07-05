@@ -1,6 +1,7 @@
 package com.omnicrola.silicon.entity;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import org.newdawn.slick.geom.Vector2f;
 
@@ -78,6 +79,10 @@ public class EntityManager implements IRenderable {
 				this.entities.remove(siliconEntity);
 			}
 		}
+	}
+
+	public Optional<ISiliconEntity> getEntityAt(int x, int y) {
+		return this.collisionManager.getEntityAt(x, y);
 	}
 
 }

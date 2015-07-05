@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Set;
 
 import org.newdawn.slick.geom.Shape;
@@ -59,6 +60,17 @@ public class CollisionManager implements IUpdatable {
 				entity2.collide(entity1);
 			}
 		}
+	}
+
+	public Optional<ISiliconEntity> getEntityAt(int x, int y) {
+		for (final List<ISiliconEntity> group : this.collisionGroups.values()) {
+			for (final ISiliconEntity entity : group) {
+				if (entity.getShape().getShape().contains(x, y)) {
+					return Optional.of(entity);
+				}
+			}
+		}
+		return Optional.empty();
 	}
 
 }

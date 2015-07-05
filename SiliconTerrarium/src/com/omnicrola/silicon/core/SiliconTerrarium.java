@@ -40,7 +40,7 @@ public class SiliconTerrarium extends BasicGame {
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		this.initializer.init(container);
+		this.initializer.init(container, this.entityManager);
 	}
 
 	@Override

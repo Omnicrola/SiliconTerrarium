@@ -22,4 +22,6 @@ public interface ISiliconEntity {
 
 	void adjustEnergy(float amount);
 
+	float getEnergy();
+
 }

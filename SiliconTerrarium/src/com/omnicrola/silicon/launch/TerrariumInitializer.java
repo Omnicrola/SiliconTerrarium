@@ -7,7 +7,10 @@ import com.omnicrola.silicon.TerrariumSettings;
 import com.omnicrola.silicon.command.CommandQueue;
 import com.omnicrola.silicon.command.CreateNewTerrariumCommand;
 import com.omnicrola.silicon.entity.EntityFactory;
+import com.omnicrola.silicon.entity.EntityManager;
+import com.omnicrola.silicon.input.CreatureStatHoverListener;
 import com.omnicrola.silicon.input.KeyInputHandler;
+import com.omnicrola.silicon.input.MouseInputHandler;
 import com.omnicrola.silicon.input.ReloadWorldListener;
 
 public class TerrariumInitializer {
@@ -19,12 +22,25 @@ public class TerrariumInitializer {
 		this.settings = settings;
 	}
 
-	public void init(GameContainer container) {
+	public void init(GameContainer container, EntityManager entityManager) {
 		loadInitialEntities(this.entityFactory);
-		loadInputListeners(container.getInput());
+		loadInputListeners(container.getInput(), entityManager);
 	}
 
-	private void loadInputListeners(Input input) {
+	private void loadInputListeners(Input input, EntityManager entityManager) {
+		setupKeyboard(input);
+		setupMouse(input, entityManager);
+	}
+
+	private void setupMouse(Input input, EntityManager entityManager) {
+		final MouseInputHandler mouseInputHandler = new MouseInputHandler();
+		input.addMouseListener(mouseInputHandler);
+
+		final CreatureStatHoverListener creatureStatHoverListener = new CreatureStatHoverListener(entityManager);
+		mouseInputHandler.addMouseMoveListener(creatureStatHoverListener);
+	}
+
+	private void setupKeyboard(Input input) {
 		final KeyInputHandler keyHandler = new KeyInputHandler();
 		input.addKeyListener(keyHandler);
 
