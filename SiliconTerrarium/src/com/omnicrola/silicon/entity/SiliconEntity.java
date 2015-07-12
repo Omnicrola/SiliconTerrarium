@@ -66,6 +66,7 @@ public class SiliconEntity implements ISiliconEntity {
 		this.size = size;
 	}
 
+	@Override
 	public IMotionGovernor getMotionGovernor() {
 		return this.motionGovernor;
 	}
@@ -114,8 +115,9 @@ public class SiliconEntity implements ISiliconEntity {
 	}
 
 	@Override
-	public void adjustEnergy(float adjustementAmount) {
-		this.energy += adjustementAmount;
+	public void adjustEnergy(float amount) {
+		this.energy += amount;
+		adjustFitness((amount > 0) ? (amount / 2f) : (amount / 4));
 	}
 
 	@Override

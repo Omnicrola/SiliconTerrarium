@@ -9,7 +9,7 @@ import com.omnicrola.silicon.util.RandomWrapper;
 
 public class CreateNewTerrariumCommand implements ICommand {
 
-	private static final int NEW_CREATURE_COUNT = 20;
+	private static final int NEW_CREATURE_COUNT = 1;
 	private static final int FOOD_COUNT = 50;
 
 	private final EntityFactory entityFactory;

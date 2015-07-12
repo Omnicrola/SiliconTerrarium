@@ -17,7 +17,15 @@ public class BehaviorFactor {
 	}
 
 	public ICollisionBehavior buildEatBehavior() {
-		return new EatOtherEntityBehavior();
+		return EatOtherEntityBehavior.INSTANCE;
+	}
+
+	public IUpdateBehavior buildFitnessOverTime() {
+		return FitnessOverTimeBehavior.INSTANCE;
+	}
+
+	public IUpdateBehavior buildUseEnergy() {
+		return EnergyConsumptionBehavior.INSTANCE;
 	}
 
 }

@@ -4,7 +4,6 @@ import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.silicon.creature.shape.EntityShape;
 import com.omnicrola.silicon.entity.behavior.BehaviorFactor;
-import com.omnicrola.silicon.entity.behavior.FitnessOverTimeBehavior;
 
 public class EntityFactory {
 	private final BehaviorFactor behaviorFactory;
@@ -24,12 +23,11 @@ public class EntityFactory {
 	public ISiliconEntity buildCritter(Vector2f position, Vector2f velocity) {
 		final EntityShape renderShape = EntityShape.defaultCritterShape();
 		final SiliconEntity siliconEntity = new SiliconEntity(renderShape, EntityType.CREATURE, 10f);
-		siliconEntity.addUpdateBehavior(new FitnessOverTimeBehavior());
+		siliconEntity.addUpdateBehavior(this.behaviorFactory.buildFitnessOverTime());
+		siliconEntity.addUpdateBehavior(this.behaviorFactory.buildUseEnergy());
 		siliconEntity.addUpdateBehavior(this.behaviorFactory.buildNeuralNetwork(siliconEntity));
 		siliconEntity.addCollisionBehavior(this.behaviorFactory.buildEatBehavior());
 		siliconEntity.setPosition(position);
-		siliconEntity.setVelocity(velocity);
 		return siliconEntity;
 	}
-
 }

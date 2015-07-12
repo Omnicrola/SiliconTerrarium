@@ -4,6 +4,11 @@ import com.omnicrola.silicon.entity.ISiliconEntity;
 
 public class EatOtherEntityBehavior implements ICollisionBehavior {
 
+	public static final ICollisionBehavior INSTANCE = new EatOtherEntityBehavior();
+
+	private EatOtherEntityBehavior() {
+	}
+
 	@Override
 	public void collide(ISiliconEntity primaryEntity, ISiliconEntity otherEntity) {
 		primaryEntity.adjustEnergy(1f);
