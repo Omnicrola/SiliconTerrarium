@@ -9,6 +9,8 @@ import org.newdawn.slick.geom.Vector2f;
 import com.omnicrola.silicon.creature.shape.EntityShape;
 import com.omnicrola.silicon.entity.behavior.ICollisionBehavior;
 import com.omnicrola.silicon.entity.behavior.IUpdateBehavior;
+import com.omnicrola.silicon.neural.INeuralNetwork;
+import com.omnicrola.silicon.neural.MutationDirective;
 
 public class SiliconEntity implements ISiliconEntity {
 	private final EntityShape baseShape;
@@ -20,8 +22,10 @@ public class SiliconEntity implements ISiliconEntity {
 	private boolean isAlive = true;
 	private float energy;
 	private float fitness;
+	private final INeuralNetwork neuralNetwork;
 
-	public SiliconEntity(EntityShape entityShape, EntityType entityType, float startingEnergy) {
+	public SiliconEntity(INeuralNetwork neuralNetwork, EntityShape entityShape, EntityType entityType,
+			float startingEnergy) {
 		this.entityType = entityType;
 		this.behaviorsUpdate = new ArrayList<>();
 		this.behaviorsCollision = new ArrayList<>();
@@ -30,6 +34,7 @@ public class SiliconEntity implements ISiliconEntity {
 		this.size = 1.0f;
 		this.fitness = 0.0f;
 		this.energy = startingEnergy;
+		this.neuralNetwork = neuralNetwork;
 	}
 
 	@Override
@@ -95,6 +100,7 @@ public class SiliconEntity implements ISiliconEntity {
 	@Override
 	public void update(float delta) {
 		updateBehaviors(delta);
+		this.neuralNetwork.evaluate(this);
 		this.motionGovernor.update(delta);
 	}
 
@@ -133,5 +139,10 @@ public class SiliconEntity implements ISiliconEntity {
 	@Override
 	public float getFitness() {
 		return this.fitness;
+	}
+
+	@Override
+	public INeuralNetwork mutateNeuralNetwork(MutationDirective mutationDirective) {
+		return this.neuralNetwork.mutate(mutationDirective);
 	}
 }

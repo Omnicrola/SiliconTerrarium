@@ -1,31 +1,40 @@
 package com.omnicrola.silicon.entity;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.silicon.TerrariumSettings;
-import com.omnicrola.silicon.core.IRenderable;
+import com.omnicrola.silicon.command.IGameContext;
+import com.omnicrola.silicon.core.IGameSubsystem;
 import com.omnicrola.silicon.creature.shape.EntityShape;
 import com.omnicrola.silicon.entity.physics.CollisionManager;
 import com.omnicrola.silicon.slick.IRenderWrapper;
 
-public class EntityManager implements IRenderable {
+public class EntityManager implements IGameSubsystem {
 
 	private final ArrayList<ISiliconEntity> entities;
 	private final CollisionManager collisionManager;
 	private final TerrariumSettings settings;
+	private final ResurrectionManager resurrectionManager;
 
-	public EntityManager(TerrariumSettings settings, CollisionManager collisionManager) {
+	public EntityManager(TerrariumSettings settings, CollisionManager collisionManager,
+			ResurrectionManager resurrectionManager) {
 		this.settings = settings;
 		this.collisionManager = collisionManager;
+		this.resurrectionManager = resurrectionManager;
 		this.entities = new ArrayList<>();
 	}
 
 	public void addEntity(ISiliconEntity entity) {
 		this.entities.add(entity);
 		this.collisionManager.addEntity(entity);
+	}
+
+	@Override
+	public void init(IGameContext context, GameContainer container) {
+		context.setContext(EntityManager.class, this);
 	}
 
 	@Override
@@ -36,16 +45,17 @@ public class EntityManager implements IRenderable {
 		}
 	}
 
-	public void clearAll() {
-		this.entities.clear();
-	}
-
 	@Override
 	public void update(float delta) {
+		spawnNewEntities();
 		updateEntities(delta);
 		wrapEdges();
 		this.collisionManager.update(delta);
 		cleanDeadEntities();
+	}
+
+	private void spawnNewEntities() {
+		this.resurrectionManager.resurrect(this);
 	}
 
 	private void wrapEdges() {
@@ -77,16 +87,12 @@ public class EntityManager implements IRenderable {
 		for (final ISiliconEntity siliconEntity : new ArrayList<>(this.entities)) {
 			if (!siliconEntity.isAlive()) {
 				this.entities.remove(siliconEntity);
+				this.resurrectionManager.queueForReincarnation(siliconEntity);
 			}
 		}
 	}
 
-	public Optional<ISiliconEntity> getEntityAt(int x, int y) {
-		return this.collisionManager.getEntityAt(x, y);
+	public void clearAll() {
+		this.entities.clear();
 	}
-
-	public Optional<ISiliconEntity> getNearestEntityOfType(EntityType type, ISiliconEntity searchEntity) {
-		return this.collisionManager.getNearestEntityOfType(type, searchEntity);
-	}
-
 }

@@ -13,8 +13,9 @@ import org.newdawn.slick.geom.Vector2f;
 import com.omnicrola.silicon.core.IUpdatable;
 import com.omnicrola.silicon.entity.EntityType;
 import com.omnicrola.silicon.entity.ISiliconEntity;
+import com.omnicrola.silicon.neural.IEnvironmentQueryHandler;
 
-public class CollisionManager implements IUpdatable {
+public class CollisionManager implements IUpdatable, IEnvironmentQueryHandler {
 	private final HashMap<EntityType, List<ISiliconEntity>> collisionGroups;
 
 	public CollisionManager() {
@@ -63,6 +64,7 @@ public class CollisionManager implements IUpdatable {
 		}
 	}
 
+	@Override
 	public Optional<ISiliconEntity> getEntityAt(int x, int y) {
 		for (final List<ISiliconEntity> group : this.collisionGroups.values()) {
 			for (final ISiliconEntity entity : group) {
@@ -74,6 +76,7 @@ public class CollisionManager implements IUpdatable {
 		return Optional.empty();
 	}
 
+	@Override
 	public Optional<ISiliconEntity> getNearestEntityOfType(EntityType type, ISiliconEntity sourceEntity) {
 		final List<ISiliconEntity> group = this.collisionGroups.get(type);
 		final Vector2f searchPosition = sourceEntity.getPosition();

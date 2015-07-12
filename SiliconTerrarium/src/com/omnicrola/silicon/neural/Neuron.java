@@ -25,26 +25,26 @@ public class Neuron implements INeuralInput {
 	}
 
 	@Override
-	public float evaluate() {
-		final float netInput = getNetActivation();
-		triggerActivation(netInput);
+	public float evaluate(NeuralContext context) {
+		final float netInput = getNetActivation(context);
+		triggerActivation(context, netInput);
 		final float sigmoid = sigmoid(netInput);
 		return sigmoid;
 	}
 
-	private float getNetActivation() {
+	private float getNetActivation(NeuralContext context) {
 		float netInput = 0f;
 		for (final Entry<INeuralInput, NeuralInputWeight> neuralInput : this.inputs.entrySet()) {
-			netInput += neuralInput.getKey().evaluate() * neuralInput.getValue().weight();
+			netInput += neuralInput.getKey().evaluate(context) * neuralInput.getValue().weight();
 		}
 		return netInput;
 	}
 
-	private void triggerActivation(float netInput) {
+	private void triggerActivation(NeuralContext context, float netInput) {
 		for (final INeuralAction neuralAction : this.actions) {
 			final float threshold = neuralAction.getThreshold();
 			if (netInput >= threshold) {
-				neuralAction.activate(netInput);
+				neuralAction.activate(context, netInput);
 			}
 		}
 	}

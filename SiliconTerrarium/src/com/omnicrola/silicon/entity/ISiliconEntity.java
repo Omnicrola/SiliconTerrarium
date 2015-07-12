@@ -3,6 +3,8 @@ package com.omnicrola.silicon.entity;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.silicon.creature.shape.EntityShape;
+import com.omnicrola.silicon.neural.INeuralNetwork;
+import com.omnicrola.silicon.neural.MutationDirective;
 
 public interface ISiliconEntity {
 
@@ -29,5 +31,7 @@ public interface ISiliconEntity {
 	public abstract float getFitness();
 
 	IMotionGovernor getMotionGovernor();
+
+	public abstract INeuralNetwork mutateNeuralNetwork(MutationDirective mutationDirective);
 
 }

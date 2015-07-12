@@ -2,12 +2,15 @@ package com.omnicrola.silicon.launch;
 
 import com.omnicrola.silicon.TerrariumSettings;
 import com.omnicrola.silicon.command.CommandQueue;
+import com.omnicrola.silicon.command.CreateNewTerrariumCommand;
 import com.omnicrola.silicon.core.SiliconTerrarium;
 import com.omnicrola.silicon.entity.EntityFactory;
 import com.omnicrola.silicon.entity.EntityManager;
-import com.omnicrola.silicon.entity.behavior.BehaviorFactor;
+import com.omnicrola.silicon.entity.ResurrectionManager;
+import com.omnicrola.silicon.entity.behavior.BehaviorFactory;
 import com.omnicrola.silicon.entity.behavior.NeuralNetworkFactory;
 import com.omnicrola.silicon.entity.physics.CollisionManager;
+import com.omnicrola.silicon.input.InputHandler;
 import com.omnicrola.silicon.neural.NeuralInputFactory;
 import com.omnicrola.silicon.neural.NeuralOutputFactory;
 import com.omnicrola.silicon.util.DeltaCalculator;
@@ -19,21 +22,32 @@ public class SiliconTerrariumBuilder {
 	public SiliconTerrarium build() {
 		final TerrariumSettings settings = TerrariumSettings.INSTANCE;
 
-		final EntityManager entityManager = new EntityManager(settings, new CollisionManager());
-		final TerrariumInitializer initializer = new TerrariumInitializer(createEntityFactory(settings, entityManager),
-				settings);
+		final CollisionManager collisionManager = new CollisionManager();
+		final EntityManager entityManager = new EntityManager(settings, collisionManager, new ResurrectionManager());
+		final EntityFactory entityFactory = createEntityFactory(settings, collisionManager);
 		final CommandQueue commandQueue = CommandQueue.instance();
-		return new SiliconTerrarium(initializer, entityManager, commandQueue, new DeltaCalculator(
+		final SiliconTerrarium siliconTerrarium = new SiliconTerrarium(commandQueue, new DeltaCalculator(
 				settings.getTargetFps()));
+		siliconTerrarium.addSubsystem(entityManager);
+		siliconTerrarium.addSubsystem(new InputHandler(settings));
+		loadInitialEntities(entityFactory);
+		return siliconTerrarium;
 	}
 
-	private EntityFactory createEntityFactory(TerrariumSettings settings, EntityManager entityManager) {
+	private EntityFactory createEntityFactory(TerrariumSettings settings, CollisionManager collisionManager) {
 		final NeuralOutputFactory neuralOutputFactory = new NeuralOutputFactory();
 		final NeuralInputFactory neuralInputFactory = new NeuralInputFactory();
-		final NeuralNetworkFactory neuralNetworkFactory = new NeuralNetworkFactory(entityManager, neuralInputFactory,
-				neuralOutputFactory);
-		final BehaviorFactor behaviorFactory = new BehaviorFactor(neuralNetworkFactory);
+		final NeuralNetworkFactory neuralNetworkFactory = new NeuralNetworkFactory(collisionManager,
+				neuralInputFactory, neuralOutputFactory);
+		final BehaviorFactory behaviorFactory = new BehaviorFactory();
 
-		return new EntityFactory(behaviorFactory);
+		return new EntityFactory(behaviorFactory, neuralNetworkFactory);
 	}
+
+	private void loadInitialEntities(EntityFactory entityFactory) {
+		final CreateNewTerrariumCommand newTerrariumCommand = new CreateNewTerrariumCommand(entityFactory,
+				TerrariumSettings.INSTANCE);
+		CommandQueue.instance().enqueueCommand(newTerrariumCommand);
+	}
+
 }

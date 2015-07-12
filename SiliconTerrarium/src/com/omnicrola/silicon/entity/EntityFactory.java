@@ -3,18 +3,22 @@ package com.omnicrola.silicon.entity;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.silicon.creature.shape.EntityShape;
-import com.omnicrola.silicon.entity.behavior.BehaviorFactor;
+import com.omnicrola.silicon.entity.behavior.BehaviorFactory;
+import com.omnicrola.silicon.entity.behavior.NeuralNetworkFactory;
+import com.omnicrola.silicon.neural.NullNeuralNetwork;
 
 public class EntityFactory {
-	private final BehaviorFactor behaviorFactory;
+	private final BehaviorFactory behaviorFactory;
+	private final NeuralNetworkFactory neuralNetworkFactory;
 
-	public EntityFactory(BehaviorFactor behaviorFactory) {
+	public EntityFactory(BehaviorFactory behaviorFactory, NeuralNetworkFactory neuralNetworkFactory) {
 		this.behaviorFactory = behaviorFactory;
+		this.neuralNetworkFactory = neuralNetworkFactory;
 	}
 
 	public ISiliconEntity buildFood(Vector2f position, Vector2f velocity) {
 		final EntityShape shape = EntityShape.createFoodShape();
-		final SiliconEntity siliconEntity = new SiliconEntity(shape, EntityType.FOOD, 1f);
+		final SiliconEntity siliconEntity = new SiliconEntity(NullNeuralNetwork.NULL, shape, EntityType.FOOD, 1f);
 		siliconEntity.setPosition(position);
 		siliconEntity.setVelocity(velocity);
 		return siliconEntity;
@@ -22,10 +26,10 @@ public class EntityFactory {
 
 	public ISiliconEntity buildCritter(Vector2f position, Vector2f velocity) {
 		final EntityShape renderShape = EntityShape.defaultCritterShape();
-		final SiliconEntity siliconEntity = new SiliconEntity(renderShape, EntityType.CREATURE, 10f);
+		final SiliconEntity siliconEntity = new SiliconEntity(this.neuralNetworkFactory.build(), renderShape,
+				EntityType.CREATURE, 10f);
 		siliconEntity.addUpdateBehavior(this.behaviorFactory.buildFitnessOverTime());
 		siliconEntity.addUpdateBehavior(this.behaviorFactory.buildUseEnergy());
-		siliconEntity.addUpdateBehavior(this.behaviorFactory.buildNeuralNetwork(siliconEntity));
 		siliconEntity.addCollisionBehavior(this.behaviorFactory.buildEatBehavior());
 		siliconEntity.setPosition(position);
 		return siliconEntity;

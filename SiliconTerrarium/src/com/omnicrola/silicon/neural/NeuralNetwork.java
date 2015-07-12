@@ -3,24 +3,30 @@ package com.omnicrola.silicon.neural;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NeuralNetwork {
-	private final List<INeuralInput> neurons;
+import com.omnicrola.silicon.entity.ISiliconEntity;
 
-	public NeuralNetwork(List<INeuralInput> neurons) {
+public class NeuralNetwork implements INeuralNetwork {
+	private final List<INeuralInput> neurons;
+	private final IEnvironmentQueryHandler environmentHandler;
+
+	public NeuralNetwork(IEnvironmentQueryHandler environmentHandler, List<INeuralInput> neurons) {
+		this.environmentHandler = environmentHandler;
 		this.neurons = neurons;
 	}
 
-	public void evaluate() {
+	@Override
+	public void evaluate(ISiliconEntity siliconEntity) {
 		for (final INeuralInput neuron : this.neurons) {
-			neuron.evaluate();
+			neuron.evaluate(new NeuralContext(siliconEntity, this.environmentHandler));
 		}
 	}
 
-	public NeuralNetwork mutate(MutationDirective mutationDirective) {
+	@Override
+	public INeuralNetwork mutate(MutationDirective mutationDirective) {
 		final List<INeuralInput> mutatedNeurons = new ArrayList<>();
 		for (final INeuralInput neuron : this.neurons) {
 			mutatedNeurons.add(neuron.mutate(mutationDirective));
 		}
-		return new NeuralNetwork(mutatedNeurons);
+		return new NeuralNetwork(this.environmentHandler, mutatedNeurons);
 	}
 }

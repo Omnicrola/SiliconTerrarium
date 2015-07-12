@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.newdawn.slick.geom.Vector2f;
 
-import com.omnicrola.silicon.entity.EntityManager;
 import com.omnicrola.silicon.entity.EntityType;
 import com.omnicrola.silicon.entity.ISiliconEntity;
 import com.omnicrola.silicon.neural.INeuralInput;
@@ -13,19 +12,12 @@ import com.omnicrola.silicon.neural.NeuralContext;
 
 public class FoodProximityInput implements INeuralInput {
 
-	private final EntityManager entityManager;
-	private final ISiliconEntity siliconEntity;
-
-	public FoodProximityInput(NeuralContext neuralContext) {
-		this.siliconEntity = neuralContext.getEntity();
-		this.entityManager = neuralContext.getEntityManager();
-	}
-
 	@Override
-	public float evaluate() {
-		final Vector2f ourPosition = this.siliconEntity.getPosition();
-		final Optional<ISiliconEntity> food = this.entityManager.getNearestEntityOfType(EntityType.FOOD,
-				this.siliconEntity);
+	public float evaluate(NeuralContext context) {
+		final ISiliconEntity entity = context.getEntity();
+		final Vector2f ourPosition = entity.getPosition();
+		final Optional<ISiliconEntity> food = context.getEnvironmentHandler().getNearestEntityOfType(EntityType.FOOD,
+				entity);
 		if (food.isPresent()) {
 			final float distance = ourPosition.distance(food.get().getPosition());
 			return distance;

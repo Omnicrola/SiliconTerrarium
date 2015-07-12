@@ -17,10 +17,9 @@ public class NeuralInputFactory {
 		this.inputMap.put(NeuralInput.NEAREST_CREATURE, NearestCreatureDistanceInput.class);
 	}
 
-	public INeuralInput create(NeuralInput type, NeuralContext neuralPackage) {
+	public INeuralInput create(NeuralInput type) {
 		try {
-			return (INeuralInput) this.inputMap.get(type).getConstructor(NeuralContext.class)
-					.newInstance(neuralPackage);
+			return (INeuralInput) this.inputMap.get(type).getConstructor().newInstance();
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| NoSuchMethodException | SecurityException e) {
 			throw new InvalidNeuralInputException(e.getMessage());

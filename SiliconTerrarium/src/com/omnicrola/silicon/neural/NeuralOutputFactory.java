@@ -18,9 +18,9 @@ public class NeuralOutputFactory {
 
 	}
 
-	public INeuralAction create(NeuralOutput type, NeuralContext neuralPackage) {
+	public INeuralAction create(NeuralOutput type) {
 		try {
-			return this.outputMap.get(type).getConstructor(NeuralContext.class).newInstance(neuralPackage);
+			return this.outputMap.get(type).getConstructor().newInstance();
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| NoSuchMethodException | SecurityException e) {
 			throw new InvalidNeuralInputException(e.getMessage());

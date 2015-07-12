@@ -4,6 +4,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.silicon.TerrariumSettings;
 import com.omnicrola.silicon.entity.EntityFactory;
+import com.omnicrola.silicon.entity.EntityManager;
 import com.omnicrola.silicon.entity.ISiliconEntity;
 import com.omnicrola.silicon.util.RandomWrapper;
 
@@ -23,27 +24,28 @@ public class CreateNewTerrariumCommand implements ICommand {
 	}
 
 	@Override
-	public void execute(ICommandContext executionContext) {
-		executionContext.clearAllEntities();
-		buildCreatures(executionContext);
-		addFood(executionContext);
+	public void execute(IGameContext executionContext) {
+		final EntityManager entityManager = executionContext.getContextFor(EntityManager.class);
+		entityManager.clearAll();
+		buildCreatures(entityManager);
+		addFood(entityManager);
 	}
 
-	private void addFood(ICommandContext executionContext) {
+	private void addFood(EntityManager entityManager) {
 		for (int i = 0; i < FOOD_COUNT; i++) {
 			final Vector2f position = randomPosition();
 			final Vector2f velocity = randomVelocity();
 			final ISiliconEntity newEntity = this.entityFactory.buildFood(position, velocity);
-			executionContext.addEntity(newEntity);
+			entityManager.addEntity(newEntity);
 		}
 	}
 
-	private void buildCreatures(ICommandContext executionContext) {
+	private void buildCreatures(EntityManager entityManager) {
 		for (int i = 0; i < NEW_CREATURE_COUNT; i++) {
 			final Vector2f position = randomPosition();
 			final Vector2f velocity = randomVelocity();
 			final ISiliconEntity newEntity = this.entityFactory.buildCritter(position, velocity);
-			executionContext.addEntity(newEntity);
+			entityManager.addEntity(newEntity);
 		}
 	}
 
