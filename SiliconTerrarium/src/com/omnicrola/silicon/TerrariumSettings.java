@@ -6,6 +6,8 @@ public class TerrariumSettings {
 	private static final int SCREEN_X = 800;
 	private static final int SCREEN_Y = 600;
 	private static final int TARGET_FPS = 60;
+	private static final int INITIAL_CREATURE_COUNT = 10;
+	private static final int INITIAL_FOOD_COUNT = 50;
 
 	private TerrariumSettings() {
 	}
@@ -20,5 +22,13 @@ public class TerrariumSettings {
 
 	public int getTargetFps() {
 		return TARGET_FPS;
+	}
+
+	public int getInitialCreatureCount() {
+		return INITIAL_CREATURE_COUNT;
+	}
+
+	public int getInitialFoodCount() {
+		return INITIAL_FOOD_COUNT;
 	}
 }

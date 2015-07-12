@@ -23,8 +23,9 @@ public class SiliconTerrariumBuilder {
 		final TerrariumSettings settings = TerrariumSettings.INSTANCE;
 
 		final CollisionManager collisionManager = new CollisionManager();
-		final EntityManager entityManager = new EntityManager(settings, collisionManager, new ResurrectionManager());
 		final EntityFactory entityFactory = createEntityFactory(settings, collisionManager);
+		final ResurrectionManager resurrectionManager = new ResurrectionManager(entityFactory, settings);
+		final EntityManager entityManager = new EntityManager(settings, collisionManager, resurrectionManager);
 		final CommandQueue commandQueue = CommandQueue.instance();
 		final SiliconTerrarium siliconTerrarium = new SiliconTerrarium(commandQueue, new DeltaCalculator(
 				settings.getTargetFps()));

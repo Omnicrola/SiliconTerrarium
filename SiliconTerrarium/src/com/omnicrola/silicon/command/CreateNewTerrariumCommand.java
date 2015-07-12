@@ -10,9 +10,6 @@ import com.omnicrola.silicon.util.RandomWrapper;
 
 public class CreateNewTerrariumCommand implements ICommand {
 
-	private static final int NEW_CREATURE_COUNT = 1;
-	private static final int FOOD_COUNT = 50;
-
 	private final EntityFactory entityFactory;
 	private final RandomWrapper random;
 	private final TerrariumSettings settings;
@@ -32,7 +29,7 @@ public class CreateNewTerrariumCommand implements ICommand {
 	}
 
 	private void addFood(EntityManager entityManager) {
-		for (int i = 0; i < FOOD_COUNT; i++) {
+		for (int i = 0; i < this.settings.getInitialFoodCount(); i++) {
 			final Vector2f position = randomPosition();
 			final Vector2f velocity = randomVelocity();
 			final ISiliconEntity newEntity = this.entityFactory.buildFood(position, velocity);
@@ -41,7 +38,7 @@ public class CreateNewTerrariumCommand implements ICommand {
 	}
 
 	private void buildCreatures(EntityManager entityManager) {
-		for (int i = 0; i < NEW_CREATURE_COUNT; i++) {
+		for (int i = 0; i < this.settings.getInitialCreatureCount(); i++) {
 			final Vector2f position = randomPosition();
 			final Vector2f velocity = randomVelocity();
 			final ISiliconEntity newEntity = this.entityFactory.buildCritter(position, velocity);
