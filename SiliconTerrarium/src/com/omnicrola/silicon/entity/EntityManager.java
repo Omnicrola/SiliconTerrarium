@@ -95,4 +95,10 @@ public class EntityManager implements IGameSubsystem {
 	public void clearAll() {
 		this.entities.clear();
 	}
+
+	public void killAll() {
+		for (final ISiliconEntity siliconEntity : this.entities) {
+			siliconEntity.destroy();
+		}
+	}
 }

@@ -13,7 +13,7 @@ public class EnergyLevelInput implements INeuralInput {
 
 	@Override
 	public INeuralInput mutate(MutationDirective mutationDirective) {
-		return null;
+		return this;
 	}
 
 }

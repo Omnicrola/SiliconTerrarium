@@ -3,6 +3,7 @@ package com.omnicrola.silicon.launch;
 import com.omnicrola.silicon.TerrariumSettings;
 import com.omnicrola.silicon.command.CommandQueue;
 import com.omnicrola.silicon.command.CreateNewTerrariumCommand;
+import com.omnicrola.silicon.command.GenerationTrigger;
 import com.omnicrola.silicon.core.SiliconTerrarium;
 import com.omnicrola.silicon.entity.EntityFactory;
 import com.omnicrola.silicon.entity.EntityManager;
@@ -32,6 +33,7 @@ public class SiliconTerrariumBuilder {
 		siliconTerrarium.addSubsystem(entityManager);
 		siliconTerrarium.addSubsystem(new InputHandler(settings));
 		loadInitialEntities(entityFactory);
+		setGenerationTrigger(siliconTerrarium);
 		return siliconTerrarium;
 	}
 
@@ -51,4 +53,7 @@ public class SiliconTerrariumBuilder {
 		CommandQueue.instance().enqueueCommand(newTerrariumCommand);
 	}
 
+	private void setGenerationTrigger(SiliconTerrarium siliconTerrarium) {
+		CommandQueue.instance().enqueueCommand(new GenerationTrigger());
+	}
 }

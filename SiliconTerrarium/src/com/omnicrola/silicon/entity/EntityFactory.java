@@ -34,7 +34,6 @@ public class EntityFactory {
 		final EntityShape renderShape = EntityShape.defaultCritterShape();
 		final SiliconEntity siliconEntity = new SiliconEntity(neuralNetwork, renderShape, EntityType.CREATURE, 10f);
 		siliconEntity.addUpdateBehavior(this.behaviorFactory.buildFitnessOverTime());
-		siliconEntity.addUpdateBehavior(this.behaviorFactory.buildUseEnergy());
 		siliconEntity.addCollisionBehavior(this.behaviorFactory.buildEatBehavior());
 		siliconEntity.setPosition(position);
 		return siliconEntity;

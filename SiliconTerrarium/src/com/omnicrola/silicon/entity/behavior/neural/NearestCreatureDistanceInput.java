@@ -28,7 +28,7 @@ public class NearestCreatureDistanceInput implements INeuralInput {
 
 	@Override
 	public INeuralInput mutate(MutationDirective mutationDirective) {
-		return null;
+		return this;
 	}
 
 }

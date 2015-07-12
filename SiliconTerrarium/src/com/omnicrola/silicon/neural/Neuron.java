@@ -35,7 +35,9 @@ public class Neuron implements INeuralInput {
 	private float getNetActivation(NeuralContext context) {
 		float netInput = 0f;
 		for (final Entry<INeuralInput, NeuralInputWeight> neuralInput : this.inputs.entrySet()) {
-			netInput += neuralInput.getKey().evaluate(context) * neuralInput.getValue().weight();
+			final float inputValue = neuralInput.getKey().evaluate(context);
+			final float weight = neuralInput.getValue().weight();
+			netInput += inputValue * weight;
 		}
 		return netInput;
 	}
@@ -57,7 +59,9 @@ public class Neuron implements INeuralInput {
 	public Neuron mutate(MutationDirective mutationDirective) {
 		final Map<INeuralInput, NeuralInputWeight> mutatedInputs = new HashMap<>();
 		for (final Entry<INeuralInput, NeuralInputWeight> inputs : this.inputs.entrySet()) {
-			mutatedInputs.put(inputs.getKey().mutate(mutationDirective), mutationDirective.mutate(inputs.getValue()));
+			final INeuralInput mutatedInput = inputs.getKey().mutate(mutationDirective);
+			final NeuralInputWeight mutatedWeight = mutationDirective.mutateWeight(inputs.getValue());
+			mutatedInputs.put(mutatedInput, mutatedWeight);
 		}
 
 		final Neuron neuron = new Neuron(mutatedInputs);

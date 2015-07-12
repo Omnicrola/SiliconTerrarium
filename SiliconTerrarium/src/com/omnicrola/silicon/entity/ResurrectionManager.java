@@ -13,6 +13,8 @@ import com.omnicrola.silicon.util.RandomWrapper;
 
 public class ResurrectionManager {
 	private static final float MUTATION_PROBABILITY = 0.2f;
+	private static final float MUTATION_DELTA = 1.0f;
+	private static final int RESPAWN_THRESHOLD = 10;
 
 	private final HashMap<EntityType, List<ISiliconEntity>> deadEntities;
 	private final MutationDirective mutationDirective;
@@ -26,7 +28,7 @@ public class ResurrectionManager {
 		this.settings = settings;
 		this.random = new RandomWrapper();
 		this.deadEntities = createDeadEntityMap();
-		this.mutationDirective = new MutationDirective(MUTATION_PROBABILITY);
+		this.mutationDirective = new MutationDirective(MUTATION_PROBABILITY, MUTATION_DELTA);
 	}
 
 	private HashMap<EntityType, List<ISiliconEntity>> createDeadEntityMap() {
@@ -59,13 +61,30 @@ public class ResurrectionManager {
 
 	private void resurrectCreatures(EntityManager entityManager) {
 		final List<ISiliconEntity> creatures = this.deadEntities.get(EntityType.CREATURE);
-		for (final ISiliconEntity creature : creatures) {
-			final INeuralNetwork neuralNetwork = creature.mutateNeuralNetwork(this.mutationDirective);
-			final ISiliconEntity newCreature = this.entityFactory.buildCritter(randomPosition(), new Vector2f(),
-					neuralNetwork);
-			entityManager.addEntity(newCreature);
+		final int creatureCount = creatures.size();
+		if (creatureCount >= RESPAWN_THRESHOLD) {
+			final ISiliconEntity mostFitEntity = findMostFit(creatures);
+			for (int i = 0; i < creatureCount; i++) {
+				final INeuralNetwork neuralNetwork = mostFitEntity.mutateNeuralNetwork(this.mutationDirective);
+				final ISiliconEntity newCreature = this.entityFactory.buildCritter(randomPosition(), new Vector2f(),
+						neuralNetwork);
+				entityManager.addEntity(newCreature);
+			}
+			creatures.clear();
 		}
-		creatures.clear();
+	}
+
+	private ISiliconEntity findMostFit(List<ISiliconEntity> creatures) {
+		ISiliconEntity mostFitEntity = null;
+		float highestFitness = Float.MIN_VALUE;
+		for (final ISiliconEntity singleEntity : creatures) {
+			final float fitness = singleEntity.getFitness();
+			if (fitness > highestFitness) {
+				highestFitness = fitness;
+				mostFitEntity = singleEntity;
+			}
+		}
+		return mostFitEntity;
 	}
 
 	private Vector2f randomPosition() {

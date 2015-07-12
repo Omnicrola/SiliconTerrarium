@@ -34,4 +34,6 @@ public interface ISiliconEntity {
 
 	public abstract INeuralNetwork mutateNeuralNetwork(MutationDirective mutationDirective);
 
+	void destroy();
+
 }

@@ -24,8 +24,8 @@ public class NeuralNetwork implements INeuralNetwork {
 	@Override
 	public INeuralNetwork mutate(MutationDirective mutationDirective) {
 		final List<INeuralInput> mutatedNeurons = new ArrayList<>();
-		for (final INeuralInput neuron : this.neurons) {
-			mutatedNeurons.add(neuron.mutate(mutationDirective));
+		for (final INeuralInput neuralInput : this.neurons) {
+			mutatedNeurons.add(neuralInput.mutate(mutationDirective));
 		}
 		return new NeuralNetwork(this.environmentHandler, mutatedNeurons);
 	}

@@ -123,7 +123,6 @@ public class SiliconEntity implements ISiliconEntity {
 	@Override
 	public void adjustEnergy(float amount) {
 		this.energy += amount;
-		adjustFitness((amount > 0) ? (amount / 2f) : (amount / 4));
 	}
 
 	@Override
@@ -138,7 +137,7 @@ public class SiliconEntity implements ISiliconEntity {
 
 	@Override
 	public float getFitness() {
-		return this.fitness;
+		return this.fitness + (this.energy / 2f);
 	}
 
 	@Override
