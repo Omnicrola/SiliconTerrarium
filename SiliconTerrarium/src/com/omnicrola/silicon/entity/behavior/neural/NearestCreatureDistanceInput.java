@@ -9,15 +9,16 @@ import com.omnicrola.silicon.entity.EntityType;
 import com.omnicrola.silicon.entity.ISiliconEntity;
 import com.omnicrola.silicon.neural.INeuralInput;
 import com.omnicrola.silicon.neural.MutationDirective;
+import com.omnicrola.silicon.neural.NeuralContext;
 
 public class NearestCreatureDistanceInput implements INeuralInput {
-
+	public static final float MAX_DISTANCE = 10f;
 	private final ISiliconEntity siliconEntity;
 	private final EntityManager entityManager;
 
-	public NearestCreatureDistanceInput(ISiliconEntity siliconEntity, EntityManager entityManager) {
-		this.siliconEntity = siliconEntity;
-		this.entityManager = entityManager;
+	public NearestCreatureDistanceInput(NeuralContext neuralContext) {
+		this.siliconEntity = neuralContext.getEntity();
+		this.entityManager = neuralContext.getEntityManager();
 	}
 
 	@Override
@@ -26,7 +27,8 @@ public class NearestCreatureDistanceInput implements INeuralInput {
 				this.siliconEntity);
 		if (nearestCreature.isPresent()) {
 			final Vector2f otherPosition = nearestCreature.get().getPosition();
-			return this.siliconEntity.getPosition().distance(otherPosition);
+			final float distance = this.siliconEntity.getPosition().distance(otherPosition);
+			return MAX_DISTANCE - distance;
 		}
 		return 0;
 	}

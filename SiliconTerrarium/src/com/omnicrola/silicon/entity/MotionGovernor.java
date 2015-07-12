@@ -33,4 +33,14 @@ public class MotionGovernor implements IMotionGovernor {
 
 	}
 
+	@Override
+	public void rotate(float degrees) {
+		this.velocity.setTheta(degrees);
+	}
+
+	@Override
+	public void modifyVelocity(float scaleAmount) {
+		this.velocity.scale(scaleAmount);
+	}
+
 }

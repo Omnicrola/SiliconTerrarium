@@ -9,15 +9,16 @@ import com.omnicrola.silicon.entity.EntityType;
 import com.omnicrola.silicon.entity.ISiliconEntity;
 import com.omnicrola.silicon.neural.INeuralInput;
 import com.omnicrola.silicon.neural.MutationDirective;
+import com.omnicrola.silicon.neural.NeuralContext;
 
 public class FoodProximityInput implements INeuralInput {
 
 	private final EntityManager entityManager;
 	private final ISiliconEntity siliconEntity;
 
-	public FoodProximityInput(ISiliconEntity siliconEntity, EntityManager entityManager) {
-		this.siliconEntity = siliconEntity;
-		this.entityManager = entityManager;
+	public FoodProximityInput(NeuralContext neuralContext) {
+		this.siliconEntity = neuralContext.getEntity();
+		this.entityManager = neuralContext.getEntityManager();
 	}
 
 	@Override

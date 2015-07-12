@@ -28,4 +28,6 @@ public interface ISiliconEntity {
 
 	public abstract float getFitness();
 
+	IMotionGovernor getMotionGovernor();
+
 }

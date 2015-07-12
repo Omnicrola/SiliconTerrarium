@@ -28,7 +28,8 @@ public class Neuron implements INeuralInput {
 	public float evaluate() {
 		final float netInput = getNetActivation();
 		triggerActivation(netInput);
-		return sigmoid(netInput);
+		final float sigmoid = sigmoid(netInput);
+		return sigmoid;
 	}
 
 	private float getNetActivation() {

@@ -1,0 +1,10 @@
+Genomic Serial Format
+
+Header Section
+ 	- Output Count(2 bytes) 
+ 	- Neuron Layer Count (1 byte)
+ 	- Inputs Count (2 bytes)
+ 	- Inputs : 1 byte each
+ Data Section
+ 	- Bottom layer weight array of arrays, weights assume same order as inputs are listed in header
+ 	- Repeat for each Layer Count in header
